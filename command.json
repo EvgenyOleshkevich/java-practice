@@ -1,0 +1,10 @@
+add {"name":"a","value":7}
+add {"name":"b","value":8}
+add {"name":"c","value":1}
+add {"name":"a","value":3}
+sum {"first":"a","second":"b"}
+remove {"name":"a"}
+sum {"first":"a","second":"b"}
+add {"name":"a","value":3}
+sum {"first":"a","second":"b"}
+remove {"name":"d"}
