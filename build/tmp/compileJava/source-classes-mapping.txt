@@ -1,4 +1,9 @@
-com/example/demo/TaskApplication.java
- com.example.demo.TaskApplication
 com/example/demo/controllers/Main.java
  com.example.demo.controllers.Main
+com/example/demo/models/Variable.java
+ com.example.demo.models.Variable
+com/example/demo/Repositories/VariableRepo.java
+ com.example.demo.Repositories.VariableRepo
+com/example/demo/TaskApplication.java
+ com.example.demo.TaskApplication
+ com.example.demo.TaskApplication$CodeResponse

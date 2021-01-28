@@ -17,6 +17,15 @@ public class TaskApplication {
 
 	private static Map<String, Integer> data = new HashMap<String, Integer>();
 
+	enum CodeResponse{
+		Ok,
+		InvalidRequest,
+		NoSuchRequestType,
+		JSONFormatError,
+		VariableAlreadyExist,
+		VariableDontExist
+	}
+
 	public static void clearData() {
 		data.clear();
 	}
@@ -24,13 +33,18 @@ public class TaskApplication {
 	public static JSONObject request(String line) {
 		String[] str = line.split(" ");
 		if (str.length != 2) {
-			return new JSONObject("{ \"code\" : 1, \"description\": \"invalid request: require 2 params\" }");
+			return new JSONObject(String.format(
+					"{ \"code\" : %s, \"description\": \"invalid request: require 2 params\" }",
+					CodeResponse.InvalidRequest.ordinal()));
 		}
 		try {
 			return request(str[0], new JSONObject(str[1]));
 		}
 		catch (JSONException e) {
-			return new JSONObject("{ \"code\" : 1, \"description\": \"invalid request: second param is not json\" }");
+			return new
+					JSONObject(String.format(
+							"{ \"code\" : %s, \"description\": \"invalid request: second param is not json\" }",
+					CodeResponse.InvalidRequest.ordinal()));
 		}
 	}
 
@@ -39,11 +53,13 @@ public class TaskApplication {
 			switch (type) {
 				case "add":
 					int value;
-					String str_value = req.get("value").toString();
 					try {
+						String str_value = req.get("value").toString();
 						return add(req.get("name").toString(), Integer.parseInt(str_value));
 					} catch (NumberFormatException e) {
-						return new JSONObject("{ \"code\" : 1, \"description\": \"invalid request: value is nan\" }");
+						return new JSONObject(String.format(
+								"{ \"code\" : %s, \"description\": \"invalid request: value is nan\" }",
+								CodeResponse.JSONFormatError.ordinal()));
 					}
 				case "remove":
 					return remove(req.get("name").toString());
@@ -52,41 +68,57 @@ public class TaskApplication {
 				case "sum":
 					return sum(req.get("first").toString(), req.get("second").toString());
 				default:
-					return new JSONObject("{ \"code\" : 1, \"description\": \"invalid request: type request\" }");
+					return new JSONObject(String.format(
+							"{ \"code\" : %s, \"description\": \"invalid request: type request\" }",
+							CodeResponse.NoSuchRequestType.ordinal()));
 			}
 		}
 		catch (JSONException e) {
-			return new JSONObject("{ \"code\" : 1, \"description\": \"invalid request: json content\" }");
+			return new JSONObject(String.format(
+					"{ \"code\" : %s, \"description\": \"invalid request: json content\" }",
+					CodeResponse.JSONFormatError.ordinal()));
 		}
 	}
 
 	private static JSONObject add(String name, int value) {
 		if (data.containsKey(name))
-			return new JSONObject("{ \"code\" : 1, \"description\": \"name exists\" }");
+			return new JSONObject(String.format(
+					"{ \"code\" : %s, \"description\": \"name exists\" }",
+					CodeResponse.VariableAlreadyExist.ordinal()));
 
 		data.put(name, value);
-		return new JSONObject("{ \"code\":0,\"description\":\"OK\"}");
+		return new JSONObject(String.format(
+				"{ \"code\" : %s, \"description\": \"OK\" }",
+				CodeResponse.Ok.ordinal()));
 	}
 
 	private static JSONObject get(String name) {
 		if (!data.containsKey(name))
-			return new JSONObject("{ \"code\" : 1, \"description\": \"name not exist\" }");
+			return new JSONObject(String.format(
+					"{ \"code\" : %s, \"description\": \"name exists\" }",
+					CodeResponse.VariableDontExist.ordinal()));
 
 		int value = data.get(name);
-		return new JSONObject(String.format("{ \"value\" : %s,\"code\" : 0, \"description\": \"OK\" }", value));
+		return new JSONObject(String.format("{ \"value\" : %s,\"code\" : %s, \"description\": \"OK\" }",
+				value, CodeResponse.Ok.ordinal()));
 	}
 
 	private static JSONObject remove(String name) {
 		data.remove(name);
-		return new JSONObject("{ \"code\" : 0, \"description\": \"OK\" }");
+		return new JSONObject(String.format(
+				"{ \"code\" : %s, \"description\": \"OK\" }",
+				CodeResponse.Ok.ordinal()));
 	}
 
 	private static JSONObject sum(String name1, String name2) {
 		if (! data.containsKey(name1) || ! data.containsKey(name2))
-			return new JSONObject("{\"code\":1,\"description\":\"name not exist\" }");
+			return new JSONObject(String.format(
+					"{ \"code\" : %s, \"description\": \"name exists\" }",
+					CodeResponse.VariableDontExist.ordinal()));
 
 		int sum = data.get(name1) + data.get(name2);
-		return new JSONObject(String.format("{ \"sum\" : %s,\"code\" : 0, \"description\": \"OK\" }", sum));
+		return new JSONObject(String.format("{ \"sum\" : %s,\"code\" : %s, \"description\": \"OK\" }",
+				sum, CodeResponse.Ok.ordinal()));
 	}
 
 }

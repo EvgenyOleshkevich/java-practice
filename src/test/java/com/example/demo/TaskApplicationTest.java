@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -8,62 +9,62 @@ class TaskApplicationTest {
     @Test
     void request_addition() {
         // addition name
-        String str = TaskApplication.request("add {\"name\":\"a\",\"value\":7}").toString();
-        assertEquals("{\"code\":0,\"description\":\"OK\"}", str);
-        str = TaskApplication.request("get {\"name\":\"a\"}").toString();
-        assertEquals("{\"code\":0,\"description\":\"OK\",\"value\":7}", str);
+        JSONObject obj = TaskApplication.request("add {\"name\":\"a\",\"value\":7}");
+        assertEquals(0, obj.get("code"));
+        obj = TaskApplication.request("get {\"name\":\"a\"}");
+        assertEquals(0, obj.get("code"));
 
         // addition name
-        str = TaskApplication.request("add {\"name\":\"b\",\"value\":8}").toString();
-        assertEquals("{\"code\":0,\"description\":\"OK\"}", str);
-        str = TaskApplication.request("get {\"name\":\"b\",\"value\":7,\"ggg\":7}").toString(); // extra parameters do not interfere
-        assertEquals("{\"code\":0,\"description\":\"OK\",\"value\":8}", str);
+        obj = TaskApplication.request("add {\"name\":\"a\",\"value\":7}");
+        assertEquals(4, obj.get("code"));
+        obj = TaskApplication.request("get {\"name\":\"b\",\"value\":7,\"ggg\":7}"); // extra parameters do not interfere
+        assertEquals(5, obj.get("code"));
 
         // twice addition one name
-        str = TaskApplication.request("add {\"name\":\"a\",\"value\":1}").toString();
-        assertEquals("{\"code\":1,\"description\":\"name exists\"}", str);
-        str = TaskApplication.request("get {\"name\":\"a\"}").toString();
-        assertEquals("{\"code\":0,\"description\":\"OK\",\"value\":7}", str);
+        obj = TaskApplication.request("add {\"name\":\"a\",\"value\":1}");
+        assertEquals(4, obj.get("code"));
+        obj = TaskApplication.request("get {\"name\":\"a\"}");
+        assertEquals(0, obj.get("code"));
 
         // json content is invalid
-        str = TaskApplication.request("add {\"name\":\"a\",\"invalid\":1}").toString();
-        assertEquals("{\"code\":1,\"description\":\"invalid request: json content\"}", str);
+        obj = TaskApplication.request("add {\"name\":\"a\",\"invalid\":1}");
+        assertEquals(TaskApplication.CodeResponse.JSONFormatError.ordinal(), obj.get("code"));
 
         // json content is invalid
-        str = TaskApplication.request("add {\"invalid\":\"a\",\"value\":1}").toString();
-        assertEquals("{\"code\":1,\"description\":\"invalid request: json content\"}", str);
+        obj = TaskApplication.request("add {\"invalid\":\"a\",\"value\":1}");
+        assertEquals(TaskApplication.CodeResponse.JSONFormatError.ordinal(), obj.get("code"));
 
         // json content is invalid
-        str = TaskApplication.request("add {\"invalid1\":\"a\",\"invalid2\":1}").toString();
-        assertEquals("{\"code\":1,\"description\":\"invalid request: json content\"}", str);
+        obj = TaskApplication.request("add {\"invalid1\":\"a\",\"invalid2\":1}");
+        assertEquals(TaskApplication.CodeResponse.JSONFormatError.ordinal(), obj.get("code"));
 
         // name is a number, its ok
-        str = TaskApplication.request("add {\"name\":10,\"value\":10}").toString();
-        assertEquals("{\"code\":0,\"description\":\"OK\"}", str);
+        obj = TaskApplication.request("add {\"name\":10,\"value\":10}");
+        assertEquals(TaskApplication.CodeResponse.Ok.ordinal(), obj.get("code"));
 
         // value is not a number
-        str = TaskApplication.request("add {\"name\":10,\"value\":\"a\"}").toString();
-        assertEquals("{\"code\":1,\"description\":\"invalid request: value is nan\"}", str);
+        obj = TaskApplication.request("add {\"name\":10,\"value\":\"a\"}");
+        assertEquals(TaskApplication.CodeResponse.JSONFormatError.ordinal(), obj.get("code"));
 
         TaskApplication.clearData();
     }
 
     @Test
     void invalid_form_request() {
-        String str = TaskApplication.request("text").toString();
-        assertEquals("{\"code\":1,\"description\":\"invalid request: require 2 params\"}", str);
+        JSONObject obj = TaskApplication.request("text");
+        assertEquals(obj.get("code"), 1);
 
         // space in json is wrong
-        str = TaskApplication.request("add {\"name\":\"a\" , \"value\":7").toString();
-        assertEquals("{\"code\":1,\"description\":\"invalid request: require 2 params\"}", str);
+        obj = TaskApplication.request("add {\"name\":\"a\" , \"value\":7");
+        assertEquals(obj.get("code"), 1);
 
         // second is not json
-        str = TaskApplication.request("add any_text").toString();
-        assertEquals("{\"code\":1,\"description\":\"invalid request: second param is not json\"}", str);
+        obj = TaskApplication.request("add any_text");
+        assertEquals(TaskApplication.CodeResponse.InvalidRequest.ordinal(), obj.get("code"));
 
         // invalid type request
-        str = TaskApplication.request("any_text {\"name\":\"a\",\"value\":7}").toString();
-        assertEquals("{\"code\":1,\"description\":\"invalid request: type request\"}", str);
+        obj = TaskApplication.request("any_text {\"name\":\"a\",\"value\":7}");
+        assertEquals(obj.get("code"), 2);
 
         TaskApplication.clearData();
     }
@@ -71,20 +72,20 @@ class TaskApplicationTest {
     @Test
     void getting() {
         // addition name
-        String str = TaskApplication.request("add {\"name\":\"a\",\"value\":7}").toString();
-        assertEquals("{\"code\":0,\"description\":\"OK\"}", str);
-        str = TaskApplication.request("get {\"name\":\"a\"}").toString();
-        assertEquals("{\"code\":0,\"description\":\"OK\",\"value\":7}", str);
+        JSONObject obj = TaskApplication.request("add {\"name\":\"a\",\"value\":7}");
+        assertEquals(obj.get("code"), 0);
+        obj = TaskApplication.request("get {\"name\":\"a\"}");
+        assertEquals(obj.get("code"), 0);
 
         // addition name
-        str = TaskApplication.request("add {\"name\":\"b\",\"value\":8}").toString();
-        assertEquals("{\"code\":0,\"description\":\"OK\"}", str);
-        str = TaskApplication.request("get {\"name\":\"b\",\"value\":7,\"ggg\":7}").toString(); // extra parameters do not interfere
-        assertEquals("{\"code\":0,\"description\":\"OK\",\"value\":8}", str);
+        obj = TaskApplication.request("add {\"name\":\"b\",\"value\":8}");
+        assertEquals(obj.get("code"), 0);
+        obj = TaskApplication.request("get {\"name\":\"b\",\"value\":7,\"ggg\":7}"); // extra parameters do not interfere
+        assertEquals(obj.get("code"), 0);
 
         // name is not exist
-        str = TaskApplication.request("get {\"name\":\"c\"}").toString();
-        assertEquals("{\"code\":1,\"description\":\"name not exist\"}", str);
+        obj = TaskApplication.request("get {\"name\":\"c\"}");
+        assertEquals(obj.get("code"), 5);
 
         TaskApplication.clearData();
     }
@@ -92,40 +93,40 @@ class TaskApplicationTest {
     @Test
     void removing() {
         // addition name
-        String str = TaskApplication.request("add {\"name\":\"a\",\"value\":7}").toString();
-        assertEquals("{\"code\":0,\"description\":\"OK\"}", str);
-        str = TaskApplication.request("get {\"name\":\"a\"}").toString();
-        assertEquals("{\"code\":0,\"description\":\"OK\",\"value\":7}", str);
+        JSONObject obj = TaskApplication.request("add {\"name\":\"a\",\"value\":7}");
+        assertEquals(obj.get("code"), 0);
+        obj = TaskApplication.request("get {\"name\":\"a\"}");
+        assertEquals(obj.get("code"), 0);
 
         // addition name
-        str = TaskApplication.request("add {\"name\":\"b\",\"value\":8}").toString();
-        assertEquals("{\"code\":0,\"description\":\"OK\"}", str);
-        str = TaskApplication.request("get {\"name\":\"b\",\"value\":7,\"ggg\":7}").toString(); // extra parameters do not interfere
-        assertEquals("{\"code\":0,\"description\":\"OK\",\"value\":8}", str);
+        obj = TaskApplication.request("add {\"name\":\"b\",\"value\":8}");
+        assertEquals(obj.get("code"), 0);
+        obj = TaskApplication.request("get {\"name\":\"b\",\"value\":7,\"ggg\":7}"); // extra parameters do not interfere
+        assertEquals(obj.get("code"), 0);
 
         // removing
-        str = TaskApplication.request("remove {\"name\":\"a\"}").toString();
-        assertEquals("{\"code\":0,\"description\":\"OK\"}", str);
+        obj = TaskApplication.request("remove {\"name\":\"a\"}");
+        assertEquals(obj.get("code"), 0);
 
         // name is not exist
-        str = TaskApplication.request("get {\"name\":\"a\"}").toString();
-        assertEquals("{\"code\":1,\"description\":\"name not exist\"}", str);
+        obj = TaskApplication.request("get {\"name\":\"a\"}");
+        assertEquals(obj.get("code"), 5);
 
         // removing
-        str = TaskApplication.request("remove {\"name\":\"b\"}").toString();
-        assertEquals("{\"code\":0,\"description\":\"OK\"}", str);
+        obj = TaskApplication.request("remove {\"name\":\"b\"}");
+        assertEquals(obj.get("code"), 0);
 
         // name is not exist
-        str = TaskApplication.request("get {\"name\":\"b\"}").toString();
-        assertEquals("{\"code\":1,\"description\":\"name not exist\"}", str);
+        obj = TaskApplication.request("get {\"name\":\"b\"}");
+        assertEquals(obj.get("code"), 5);
 
         // twice removing
-        str = TaskApplication.request("remove {\"name\":\"b\"}").toString();
-        assertEquals("{\"code\":0,\"description\":\"OK\"}", str);
+        obj = TaskApplication.request("remove {\"name\":\"b\"}");
+        assertEquals(obj.get("code"), 0);
 
         // removing not exist ever
-        str = TaskApplication.request("remove {\"name\":\"any_name_which_dont_use_before\"}").toString();
-        assertEquals("{\"code\":0,\"description\":\"OK\"}", str);
+        obj = TaskApplication.request("remove {\"name\":\"any_name_which_dont_use_before\"}");
+        assertEquals(obj.get("code"), 0);
 
         TaskApplication.clearData();
     }
@@ -133,25 +134,25 @@ class TaskApplicationTest {
     @Test
     void sum() {
         // addition name
-        String str = TaskApplication.request("add {\"name\":\"a\",\"value\":7}").toString();
-        assertEquals("{\"code\":0,\"description\":\"OK\"}", str);
-        str = TaskApplication.request("get {\"name\":\"a\"}").toString();
-        assertEquals("{\"code\":0,\"description\":\"OK\",\"value\":7}", str);
+        JSONObject obj = TaskApplication.request("add {\"name\":\"a\",\"value\":7}");
+        assertEquals(obj.get("code"), 0);
+        obj = TaskApplication.request("get {\"name\":\"a\"}");
+        assertEquals(obj.get("code"), 0);
 
         // addition name
-        str = TaskApplication.request("add {\"name\":\"b\",\"value\":8}").toString();
-        assertEquals("{\"code\":0,\"description\":\"OK\"}", str);
-        str = TaskApplication.request("get {\"name\":\"b\",\"value\":7,\"ggg\":7}").toString(); // extra parameters do not interfere
-        assertEquals("{\"code\":0,\"description\":\"OK\",\"value\":8}", str);
+        obj = TaskApplication.request("add {\"name\":\"b\",\"value\":8}");
+        assertEquals(obj.get("code"), 0);
+        obj = TaskApplication.request("get {\"name\":\"b\",\"value\":7,\"ggg\":7}"); // extra parameters do not interfere
+        assertEquals(obj.get("code"), 0);
 
-        str = TaskApplication.request("sum {\"first\":\"a\",\"second\":\"b\"}").toString();
-        assertEquals("{\"code\":0,\"description\":\"OK\",\"sum\":15}", str);
+        obj = TaskApplication.request("sum {\"first\":\"a\",\"second\":\"b\"}");
+        assertEquals(obj.get("code"), 0);
 
-        str = TaskApplication.request("sum {\"first\":\"c\",\"second\":\"b\"}").toString();
-        assertEquals("{\"code\":1,\"description\":\"name not exist\"}", str);
+        obj = TaskApplication.request("sum {\"first\":\"c\",\"second\":\"b\"}");
+        assertEquals(obj.get("code"), 5);
 
-        str = TaskApplication.request("sum {\"first\":\"c\",\"second\":\"d\"}").toString();
-        assertEquals("{\"code\":1,\"description\":\"name not exist\"}", str);
+        obj = TaskApplication.request("sum {\"first\":\"c\",\"second\":\"d\"}");
+        assertEquals(obj.get("code"), 5);
 
         TaskApplication.clearData();
     }

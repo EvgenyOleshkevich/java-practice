@@ -7,12 +7,18 @@
 <body>
 <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
     <nav class="my-2 my-md-0 me-md-3">
-        <a class="p-2 text-dark" href="add">добавить</a>
-        <a class="p-2 text-dark" href="get">получить</a>
-        <a class="p-2 text-dark" href="remove">удалить</a>
-        <a class="p-2 text-dark" href="sum">сложить</a>
+        <a class="p-2 text-dark" href="home">назад</a>
     </nav>
 </header>
-<p th:text="'response: ' + ${response} + '!'" />
+
+<div class="container mt-5 mb-5">
+    <form action="get" method="post">
+        <p><b>имя переменной:</b><br>
+            <input type="text" name="name" size="40" maxlength="20">
+        </p>
+        <button type="submit" class="btn btn-success">получить</button>
+    </form>
+</div>
+
 </body>
 </html>

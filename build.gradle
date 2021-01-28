@@ -21,8 +21,12 @@ repositories {
 
 dependencies {
 	compile 'org.json:json:20201115'
+	compile("mysql:mysql-connector-java")
+	//runtimeOnly 'mysql: mysql-connector-java'
+	//classpath 'mysql-connector-java-5.1.22-bin.jar '
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
