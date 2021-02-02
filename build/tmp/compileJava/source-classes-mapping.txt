@@ -1,9 +1,20 @@
-com/example/demo/controllers/Main.java
- com.example.demo.controllers.Main
-com/example/demo/models/Variable.java
- com.example.demo.models.Variable
 com/example/demo/Repositories/VariableRepo.java
  com.example.demo.Repositories.VariableRepo
 com/example/demo/TaskApplication.java
  com.example.demo.TaskApplication
- com.example.demo.TaskApplication$CodeResponse
+com/example/demo/models/SumResponse.java
+ com.example.demo.models.SumResponse
+com/example/demo/controllers/Main.java
+ com.example.demo.controllers.Main
+com/example/demo/models/Variable.java
+ com.example.demo.models.Variable
+com/example/demo/controllers/Test_json.java
+ com.example.demo.controllers.Test_json
+com/example/demo/CodeResponse.java
+ com.example.demo.CodeResponse
+com/example/demo/models/NameRequest.java
+ com.example.demo.models.NameRequest
+com/example/demo/models/Response.java
+ com.example.demo.models.Response
+com/example/demo/models/SumRequest.java
+ com.example.demo.models.SumRequest

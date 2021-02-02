@@ -1,4 +1,4 @@
-com/example/demo/TaskApplicationTests.java
- com.example.demo.TaskApplicationTests
 com/example/demo/TaskApplicationTest.java
  com.example.demo.TaskApplicationTest
+com/example/demo/controllers/MainTest.java
+ com.example.demo.controllers.MainTest

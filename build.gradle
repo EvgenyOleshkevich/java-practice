@@ -20,6 +20,8 @@ repositories {
 }
 
 dependencies {
+	implementation 'junit:junit:4.12'
+	implementation 'junit:junit:4.12'
 	compile 'org.json:json:20201115'
 	compile("mysql:mysql-connector-java")
 	//runtimeOnly 'mysql: mysql-connector-java'

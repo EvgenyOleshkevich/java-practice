@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TaskApplicationTest {
     @Test
-    void request_addition() {
+    void requestAddition() {
         // addition name
         JSONObject obj = TaskApplication.request("add {\"name\":\"a\",\"value\":7}");
         assertEquals(0, obj.get("code"));
@@ -28,29 +28,29 @@ class TaskApplicationTest {
 
         // json content is invalid
         obj = TaskApplication.request("add {\"name\":\"a\",\"invalid\":1}");
-        assertEquals(TaskApplication.CodeResponse.JSONFormatError.ordinal(), obj.get("code"));
+        assertEquals(CodeResponse.JSONFormatError.ordinal(), obj.get("code"));
 
         // json content is invalid
         obj = TaskApplication.request("add {\"invalid\":\"a\",\"value\":1}");
-        assertEquals(TaskApplication.CodeResponse.JSONFormatError.ordinal(), obj.get("code"));
+        assertEquals(CodeResponse.JSONFormatError.ordinal(), obj.get("code"));
 
         // json content is invalid
         obj = TaskApplication.request("add {\"invalid1\":\"a\",\"invalid2\":1}");
-        assertEquals(TaskApplication.CodeResponse.JSONFormatError.ordinal(), obj.get("code"));
+        assertEquals(CodeResponse.JSONFormatError.ordinal(), obj.get("code"));
 
         // name is a number, its ok
         obj = TaskApplication.request("add {\"name\":10,\"value\":10}");
-        assertEquals(TaskApplication.CodeResponse.Ok.ordinal(), obj.get("code"));
+        assertEquals(CodeResponse.Ok.ordinal(), obj.get("code"));
 
         // value is not a number
         obj = TaskApplication.request("add {\"name\":10,\"value\":\"a\"}");
-        assertEquals(TaskApplication.CodeResponse.JSONFormatError.ordinal(), obj.get("code"));
+        assertEquals(CodeResponse.JSONFormatError.ordinal(), obj.get("code"));
 
         TaskApplication.clearData();
     }
 
     @Test
-    void invalid_form_request() {
+    void invalidFormRequest() {
         JSONObject obj = TaskApplication.request("text");
         assertEquals(obj.get("code"), 1);
 
@@ -60,7 +60,7 @@ class TaskApplicationTest {
 
         // second is not json
         obj = TaskApplication.request("add any_text");
-        assertEquals(TaskApplication.CodeResponse.InvalidRequest.ordinal(), obj.get("code"));
+        assertEquals(CodeResponse.InvalidRequest.ordinal(), obj.get("code"));
 
         // invalid type request
         obj = TaskApplication.request("any_text {\"name\":\"a\",\"value\":7}");
@@ -132,7 +132,7 @@ class TaskApplicationTest {
     }
 
     @Test
-    void sum() {
+    void summation() {
         // addition name
         JSONObject obj = TaskApplication.request("add {\"name\":\"a\",\"value\":7}");
         assertEquals(obj.get("code"), 0);

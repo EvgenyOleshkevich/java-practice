@@ -17,15 +17,6 @@ public class TaskApplication {
 
 	private static Map<String, Integer> data = new HashMap<String, Integer>();
 
-	enum CodeResponse{
-		Ok,
-		InvalidRequest,
-		NoSuchRequestType,
-		JSONFormatError,
-		VariableAlreadyExist,
-		VariableDontExist
-	}
-
 	public static void clearData() {
 		data.clear();
 	}
@@ -120,5 +111,4 @@ public class TaskApplication {
 		return new JSONObject(String.format("{ \"sum\" : %s,\"code\" : %s, \"description\": \"OK\" }",
 				sum, CodeResponse.Ok.ordinal()));
 	}
-
 }

@@ -12,6 +12,13 @@ public class Variable {
 
     private  int value;
 
+    public Variable(){}
+
+    public Variable(String name, int value) {
+        this.name = name;
+        this.value = value;
+    }
+
     public int getValue() {
         return value;
     }
