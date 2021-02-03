@@ -1,0 +1,7 @@
+Exception in thread "main" java.lang.NoClassDefFoundError: org/springframework/boot/SpringApplication
+        at com.example.demo.TaskApplication.main(TaskApplication.java:9)
+Caused by: java.lang.ClassNotFoundException: org.springframework.boot.SpringApplication
+        at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:606)
+        at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:168)
+        at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:522)
+        ... 1 more
