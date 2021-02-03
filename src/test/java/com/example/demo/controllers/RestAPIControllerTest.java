@@ -4,7 +4,8 @@ import com.example.demo.models.NameRequest;
 import com.example.demo.models.Variable;
 import com.example.demo.repositories.VariableRepo;
 import com.example.demo.repositories.VariableRepoForTesting;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+//import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -38,6 +39,6 @@ public class RestAPIControllerTest {
         controller.setRepo(mockService);
 
         controller.addByObject(var);
-        assertEquals(var, controller.getByObject(new NameRequest(var.getName())));
+        assertEquals(var.getValue(), controller.getByObject(new NameRequest(var.getName())).getBody().getValue());
     }
 }
