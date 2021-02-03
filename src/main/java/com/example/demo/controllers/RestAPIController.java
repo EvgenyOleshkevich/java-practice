@@ -25,6 +25,10 @@ public class RestAPIController {
     @Autowired
     private VariableRepo vars;
 
+    public void setRepo(VariableRepo vars) {
+        this.vars = vars;
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Response> getByPageParam(@PathVariable("id") String name) {
         Optional<Variable> var = vars.findById(name);

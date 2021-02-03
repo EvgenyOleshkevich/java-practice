@@ -1,4 +1,4 @@
 com/example/demo/TaskApplicationTest.java
  com.example.demo.TaskApplicationTest
-com/example/demo/controllers/MainTest.java
- com.example.demo.controllers.MainTest
+com/example/demo/controllers/RestAPIControllerTest.java
+ com.example.demo.controllers.RestAPIControllerTest

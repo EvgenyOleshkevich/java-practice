@@ -1,21 +1,15 @@
 package com.example.demo;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @SpringBootApplication
 public class TaskApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(TaskApplication.class, args);
 	}
 
-	private static Map<String, Integer> data = new HashMap<String, Integer>();
+	/*private static Map<String, Integer> data = new HashMap<String, Integer>();
 
 	public static void clearData() {
 		data.clear();
@@ -110,5 +104,5 @@ public class TaskApplication {
 		int sum = data.get(name1) + data.get(name2);
 		return new JSONObject(String.format("{ \"sum\" : %s,\"code\" : %s, \"description\": \"OK\" }",
 				sum, CodeResponse.Ok.ordinal()));
-	}
+	}*/
 }
