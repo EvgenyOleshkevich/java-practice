@@ -1,5 +1,7 @@
 package com.example.demo.models;
 
+import com.example.demo.CodeResponse;
+
 public class Response {
     private String description;
 
@@ -13,6 +15,12 @@ public class Response {
         this.description = description;
         this.value = value;
         this.code = code;
+    }
+
+    public Response(int value, CodeResponse code) {
+        this.description = code.toString();
+        this.value = value;
+        this.code = code.getCode();
     }
 
     public int getCode() { return code; }

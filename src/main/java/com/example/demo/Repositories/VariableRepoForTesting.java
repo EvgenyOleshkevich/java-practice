@@ -12,6 +12,7 @@ public class VariableRepoForTesting implements VariableRepo {
 
     @Override
     public Variable save(Variable var){
+        data.put(var.getName(), var);
         return var;
     }
 
@@ -22,7 +23,10 @@ public class VariableRepoForTesting implements VariableRepo {
 
     @Override
     public Optional<Variable> findById(String s) {
-        return  Optional.of(data.get(s));
+        Variable var = data.get(s);
+        if (var == null)
+            return Optional.empty();
+        return  Optional.of(var);
     }
 
     @Override
@@ -56,9 +60,7 @@ public class VariableRepoForTesting implements VariableRepo {
     }
 
     @Override
-    public void deleteAll(Iterable<? extends Variable> entities) {
-
-    }
+    public void deleteAll(Iterable<? extends Variable> entities) {}
 
     @Override
     public void deleteAll() {

@@ -6,7 +6,8 @@ public enum CodeResponse{
     NoSuchRequestType(2),
     JSONFormatError(3),
     VariableAlreadyExist(4),
-    VariableDontExist(5);
+    VariableDontExist(5),
+    CouldNotSaveObject(6);
 
     private int code;
     CodeResponse(int code){
