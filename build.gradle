@@ -45,6 +45,42 @@ test {
 	useJUnitPlatform()
 }
 
+/*task compileTestClasses
+task createSchema
+
+compileTestClasses.doLast {
+	print " jasa "
+}
+
+createSchema.doLast {
+	print " rrrr "
+}
+
+task hello{
+	dependsOn compileTestClasses, createSchema
+}
+
+hello.doLast {
+	println 'connect to database'
+}
+
+hello.doFirst  {
+	println 'update database schema'
+}
+
+hello {
+	println 'configuring database connection'
+}
+
+task installSumService(type: Jar) {
+	manifest {
+		attributes ('Main-Class': 'com.example.demo.TaskApplication')
+	}
+	archiveName = 'sum_service.jar'
+	destinationDir = file("${buildDir}/jars")
+	from sourceSets.main.output
+}*/
+
 
 task installSumService{
 	dependsOn bootJar, jar

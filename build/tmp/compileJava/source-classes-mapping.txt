@@ -1,22 +1,36 @@
-com/example/demo/models/SumRequest.java
- com.example.demo.models.SumRequest
-com/example/demo/controllers/HTMLController.java
- com.example.demo.controllers.HTMLController
+com/example/demo/TaskApplication.java
+ com.example.demo.TaskApplication
 com/example/demo/models/SumResponse.java
  com.example.demo.models.SumResponse
-com/example/demo/repositories/VariableRepo.java
- com.example.demo.repositories.VariableRepo
+com/example/demo/models/Seller.java
+ com.example.demo.models.Seller
 com/example/demo/models/Variable.java
  com.example.demo.models.Variable
 com/example/demo/models/NameRequest.java
  com.example.demo.models.NameRequest
-com/example/demo/TaskApplication.java
- com.example.demo.TaskApplication
+com/example/demo/repositories/SellerRepo.java
+ com.example.demo.repositories.SellerRepo
 com/example/demo/models/Response.java
  com.example.demo.models.Response
-com/example/demo/CodeResponse.java
- com.example.demo.CodeResponse
-com/example/demo/repositories/VariableRepoForTesting.java
- com.example.demo.repositories.VariableRepoForTesting
+com/example/demo/models/SumRequest.java
+ com.example.demo.models.SumRequest
+com/example/demo/repositories/CustomerRepo.java
+ com.example.demo.repositories.CustomerRepo
 com/example/demo/controllers/RestAPIController.java
  com.example.demo.controllers.RestAPIController
+com/example/demo/controllers/HTMLController.java
+ com.example.demo.controllers.HTMLController
+com/example/demo/models/Item.java
+ com.example.demo.models.Item
+com/example/demo/repositories/VariableRepoForTesting.java
+ com.example.demo.repositories.VariableRepoForTesting
+com/example/demo/CodeResponse.java
+ com.example.demo.CodeResponse
+com/example/demo/models/Customer.java
+ com.example.demo.models.Customer
+com/example/demo/repositories/VariableRepo.java
+ com.example.demo.repositories.VariableRepo
+com/example/demo/repositories/ItemRepo.java
+ com.example.demo.repositories.ItemRepo
+com/example/demo/controllers/StoreController.java
+ com.example.demo.controllers.StoreController

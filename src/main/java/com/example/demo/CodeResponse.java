@@ -7,7 +7,11 @@ public enum CodeResponse{
     JSONFormatError(3),
     VariableAlreadyExist(4),
     VariableDontExist(5),
-    CouldNotSaveObject(6);
+    CouldNotSaveObject(6),
+    UserLoginDontExist(7),
+    InvalidPassword(8),
+    UserLoginAlredyExist(9),
+    NotEnoughmoneyToBuy(10);
 
     private int code;
     CodeResponse(int code){
