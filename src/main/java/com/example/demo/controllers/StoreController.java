@@ -163,11 +163,12 @@ public class StoreController {
 
     }
 
-    @GetMapping("/seller/setDescription/{login}/{description}")
+    @GetMapping("/seller/setDescription/{login}/{password}/{description}")
     public ResponseEntity<Response> sellerSetDescription(@PathVariable("login") String login,
-                                                      @PathVariable("description") String description) {
+                                                         @PathVariable("password") String password,
+                                                         @PathVariable("description") String description) {
         Optional<Seller> seller = sellers.findById(login);
-        if (seller.isPresent()) {
+        if (seller.isPresent() && seller.get().getPassword().equals(password)) {
             seller.get().setDescription(description);
             sellers.save(seller.get());
             return ResponseEntity.ok(new Response(0,
