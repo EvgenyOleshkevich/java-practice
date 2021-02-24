@@ -114,7 +114,7 @@ public class StoreController {
             return ResponseEntity.ok(new Response(0,
                     CodeResponse.UserLoginAlredyExist));
         } else {
-            sellers.save(new Seller(login, password));
+            sellers.save(new Seller(login, password, "withot description"));
             return ResponseEntity.ok(new Response(0,
                     CodeResponse.Ok));
         }
@@ -177,6 +177,17 @@ public class StoreController {
                     CodeResponse.UserLoginDontExist));
         }
 
+    }
+
+    @GetMapping("/getSellers")
+    public @ResponseBody List<SellerRequest> getSellers() {
+        Iterable<Seller> sellerIterable = sellers.findAll();
+        List<SellerRequest> sellerList = new ArrayList<SellerRequest>();
+
+        for (Seller seller : sellerIterable) {
+            sellerList.add(new SellerRequest(seller.getLogin(), seller.getDescription()));
+        }
+        return sellerList;
     }
 
     @GetMapping("/seller/addItem/{login}/{name}/{cost}/{description}")

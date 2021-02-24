@@ -16,9 +16,10 @@ public class Seller {
 
     public Seller(){}
 
-    public Seller(String login, String password) {
+    public Seller(String login, String password, String description) {
         this.login = login;
         this.password = password;
+        this.description = description;
     }
 
     public String getPassword() {
