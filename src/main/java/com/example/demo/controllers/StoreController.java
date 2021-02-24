@@ -141,7 +141,7 @@ public class StoreController {
         Optional<Item> item = items.findById(idItem);
         if (customer.isPresent() && seller.isPresent() && item.isPresent()) {
             if (customer.get().getAmount() - item.get().getCost() < 0) {
-                return ResponseEntity.ok(new Response(0,
+                return ResponseEntity.ok(new Response(-1,
                         CodeResponse.NotEnoughmoneyToBuy));
             }
             customer.get().setAmount(customer.get().getAmount() - item.get().getCost());
@@ -234,7 +234,7 @@ public class StoreController {
 
             for (Item item :
                     itemIterable) {
-                if (item.getSeller() == seller.get().getLogin())
+                if (item.getSeller().equals(seller.get().getLogin()))
                     itemBySeller.add(item);
             }
             return itemBySeller;
