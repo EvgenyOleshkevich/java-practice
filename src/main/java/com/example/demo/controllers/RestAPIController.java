@@ -1,3 +1,4 @@
+/*
 package com.example.demo.controllers;
 
 
@@ -152,14 +153,16 @@ public class RestAPIController {
                 return ResponseEntity.ok(new Response(0,
                         CodeResponse.CouldNotSaveObject));
             } else {
-                /*URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                */
+/*URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                         .path("/{id}")
                         .buildAndExpand(createdVar.getName())
                         .toUri();
 
                 return ResponseEntity.created(uri)
                         .body(new Response(createdVar.getValue(),
-                                CodeResponse.Ok));*/
+                                CodeResponse.Ok));*//*
+
                 return ResponseEntity.ok(new Response(createdVar.getValue(),
                         CodeResponse.Ok));
             }
@@ -260,3 +263,4 @@ public class RestAPIController {
                 CodeResponse.VariableDontExist));
     }
 }
+*/

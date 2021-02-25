@@ -124,7 +124,19 @@ public class StoreController {
     public ResponseEntity<Response> deleteSeller(@PathVariable("login") String login,
                                                  @PathVariable("password") String password) {
         Optional<Seller> seller = sellers.findById(login);
+        Iterable<Item> itemIterable = items.findAll();
+        Iterable<Variable> orderIterable = orders.findAll();
         if (seller.isPresent() && seller.get().getPassword().equals(password)) {
+            for (Variable order: orderIterable) {
+                if (order.getSeller().equals(login)){
+                    orders.delete(order);
+                }
+            }
+            for (Item item: itemIterable) {
+                if (item.getSeller().equals(login)){
+                    items.delete(item);
+                }
+            }
             sellers.delete(seller.get());
         }
         return ResponseEntity.ok(new Response(0,
@@ -150,7 +162,7 @@ public class StoreController {
             order.setItem(item.get().getID());
             order.setSeller(seller.get().getLogin());
             order.setAddress(address);
-            order.setName((new Date()).toString());
+            order.setName(item.get().getName() + "_" + (new Date()).hashCode());
             orders.save(order);
             customers.save(customer.get());
             sellers.save(seller.get());
@@ -245,31 +257,31 @@ public class StoreController {
     }
 
     @GetMapping("/getOrders/{loginSeller}")
-    public @ResponseBody List<Variable> getOrderBySeller(@PathVariable("loginSeller") String loginSeller) {
+    public @ResponseBody List<Order> getOrderBySeller(@PathVariable("loginSeller") String loginSeller) {
         Optional<Seller> seller = sellers.findById(loginSeller);
         if (seller.isPresent()) {
             Iterable<Variable> orderIterable = orders.findAll();
-            List<Variable> orderBySeller = new ArrayList<Variable>();
+            List<Order> orderBySeller = new ArrayList<Order>();
 
             for (Variable order :
                     orderIterable) {
                 if (order.getSeller().equals(seller.get().getLogin()))
-                    orderBySeller.add(order);
+                    orderBySeller.add(new Order(order));
             }
             return orderBySeller;
         } else {
-            return new ArrayList<Variable>();
+            return new ArrayList<Order>();
         }
     }
 
     @GetMapping("/seller/deleteOrder/{login}/{password}/{id}")
     public ResponseEntity<Response> deleteOrder(@PathVariable("login") String login,
                                                @PathVariable("password") String password,
-                                               @PathVariable("id") String idOrder) {
+                                               @PathVariable("id") long idOrder) {
         Optional<Seller> seller = sellers.findById(login);
         Optional<Variable> order = orders.findById(idOrder);
         if (seller.isPresent() && seller.get().getPassword().equals(password)
-                && order.isPresent()) {
+                && order.isPresent() && order.get().getSeller().equals(login)) {
             orders.delete(order.get());
         }
         return ResponseEntity.ok(new Response(0,

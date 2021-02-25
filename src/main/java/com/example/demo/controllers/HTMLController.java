@@ -1,3 +1,4 @@
+/*
 package com.example.demo.controllers;
 import com.example.demo.repositories.VariableRepo;
 import com.example.demo.models.Variable;
@@ -47,8 +48,6 @@ public class HTMLController {
     public String add(@RequestParam(name="name", required=true) String name,
                       @RequestParam(name="value", required=true) int value,
                       Model model) {
-        //String request = "add {\"name\":\"" + name + "\",\"value\":" + value + "}";
-        //model.addAttribute("response", TaskApplication.request(request).toString());
 
         if (!vars.findById(name).isPresent()) {
             Variable variable = new Variable();
@@ -106,3 +105,4 @@ public class HTMLController {
     }
 }
 
+*/

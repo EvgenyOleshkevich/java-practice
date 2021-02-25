@@ -4,5 +4,5 @@ import com.example.demo.models.Variable;
 import org.springframework.data.repository.CrudRepository;
 
 
-public interface VariableRepo extends CrudRepository<Variable, String>{
+public interface VariableRepo extends CrudRepository<Variable, Long>{
 }
