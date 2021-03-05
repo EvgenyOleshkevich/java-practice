@@ -6,14 +6,14 @@ import com.example.demo.repositories.CustomerRepo;
 import com.example.demo.repositories.ItemRepo;
 import com.example.demo.repositories.SellerRepo;
 import com.example.demo.repositories.VariableRepo;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.util.*;
 
 @RestController
 @RequestMapping("/store")
@@ -299,5 +299,42 @@ public class StoreController {
         }
 
         return activities;
+    }
+
+    @RequestMapping(value = "/files/{file_name}", method = RequestMethod.GET)
+    public void getFile(
+            @PathVariable("file_name") String fileName,
+            HttpServletResponse response) {
+        try {
+            // get your file as InputStream
+            //InputStream is = new FileInputStream("q/Test.prefab");
+            InputStream is = new FileInputStream("file.prefab");
+            // copy it to response's OutputStream
+            IOUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();
+            is.close();
+        } catch (IOException ex) {
+
+        }
+    }
+
+    @RequestMapping(value = "/upload/{file}", method = RequestMethod.GET)
+    @ResponseBody
+    public String uploadFile(@PathVariable("file") String file) {
+
+        try {
+            byte[] decodedBytes = Base64.getDecoder().decode(file);
+            String decodedString = new String(decodedBytes);
+            BufferedWriter writer = new BufferedWriter(new FileWriter("file.prefab"));
+            writer.write(decodedString);
+
+            writer.close();
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return "Failure";
+        }
+        return "Success";
     }
 }
