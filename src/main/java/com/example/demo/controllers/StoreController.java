@@ -215,8 +215,8 @@ public class StoreController {
             item.setName(name);
             item.setCost(cost);
             item.setDescription(description);
-            items.save(item);
-            return ResponseEntity.ok(new Response(0,
+            item = items.save(item);
+            return ResponseEntity.ok(new Response(item.getID(),
                     CodeResponse.Ok));
         } else {
             return ResponseEntity.ok(new Response(0,
@@ -308,7 +308,7 @@ public class StoreController {
         try {
             // get your file as InputStream
             //InputStream is = new FileInputStream("q/Test.prefab");
-            InputStream is = new FileInputStream("file.prefab");
+            InputStream is = new FileInputStream("files/" + fileName + ".prefab");
             // copy it to response's OutputStream
             IOUtils.copy(is, response.getOutputStream());
             response.flushBuffer();
@@ -318,14 +318,15 @@ public class StoreController {
         }
     }
 
-    @RequestMapping(value = "/upload/{file}", method = RequestMethod.GET)
+    @RequestMapping(value = "/upload/{fileName}/{file}", method = RequestMethod.GET)
     @ResponseBody
-    public String uploadFile(@PathVariable("file") String file) {
+    public String uploadFile(@PathVariable("fileName") String fileName,
+                             @PathVariable("file") String file) {
 
         try {
             byte[] decodedBytes = Base64.getDecoder().decode(file);
             String decodedString = new String(decodedBytes);
-            BufferedWriter writer = new BufferedWriter(new FileWriter("file.prefab"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("files/" + fileName + ".prefab"));
             writer.write(decodedString);
 
             writer.close();

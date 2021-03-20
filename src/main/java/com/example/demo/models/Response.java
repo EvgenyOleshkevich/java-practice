@@ -5,19 +5,19 @@ import com.example.demo.CodeResponse;
 public class Response {
     private String description;
 
-    private  int code;
+    private int code;
 
-    private  int value;
+    private long value;
 
     public Response(){}
 
-    public Response(int value, int code, String description) {
+    public Response(long value, int code, String description) {
         this.description = description;
         this.value = value;
         this.code = code;
     }
 
-    public Response(int value, CodeResponse code) {
+    public Response(long value, CodeResponse code) {
         this.description = code.toString();
         this.value = value;
         this.code = code.getCode();
@@ -27,9 +27,9 @@ public class Response {
 
     public void setCode(int code) { this.code = code; }
 
-    public int getValue() { return value; }
+    public long getValue() { return value; }
 
-    public void setValue(int value) { this.value = value; }
+    public void setValue(long value) { this.value = value; }
 
     public String getDescription() {
         return description;

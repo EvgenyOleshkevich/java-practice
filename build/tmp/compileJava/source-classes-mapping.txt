@@ -12,8 +12,8 @@ com/example/demo/repositories/SellerRepo.java
  com.example.demo.repositories.SellerRepo
 com/example/demo/models/Order.java
  com.example.demo.models.Order
-com/example/demo/models/Response.java
- com.example.demo.models.Response
+com/example/demo/repositories/ItemRepo.java
+ com.example.demo.repositories.ItemRepo
 com/example/demo/models/SumRequest.java
  com.example.demo.models.SumRequest
 com/example/demo/repositories/CustomerRepo.java
@@ -26,9 +26,9 @@ com/example/demo/CodeResponse.java
  com.example.demo.CodeResponse
 com/example/demo/models/Customer.java
  com.example.demo.models.Customer
-com/example/demo/controllers/StoreController.java
- com.example.demo.controllers.StoreController
-com/example/demo/repositories/ItemRepo.java
- com.example.demo.repositories.ItemRepo
 com/example/demo/repositories/VariableRepo.java
  com.example.demo.repositories.VariableRepo
+com/example/demo/controllers/StoreController.java
+ com.example.demo.controllers.StoreController
+com/example/demo/models/Response.java
+ com.example.demo.models.Response
